@@ -6,17 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.example.kidsdrawing.DrawingView
-        android:id="@+id/drawing_view"
+    <FrameLayout
+        android:id="@+id/flDrawingView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="5dp"
+        android:padding="1dp"
         android:background="@drawable/drawing_view_layout"
         app:layout_constraintBottom_toTopOf="@+id/llPaintColors"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/eiffel"
+            android:scaleType="centerCrop"/>
+
+        <com.example.kidsdrawing.DrawingView
+            android:id="@+id/drawing_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </FrameLayout>
+
+
 
     <LinearLayout
         android:id="@+id/llPaintColors"
@@ -25,7 +42,7 @@
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/drawing_view"
+        app:layout_constraintTop_toBottomOf="@id/flDrawingView"
         app:layout_constraintBottom_toTopOf="@+id/ibBrush">
 
         <ImageButton
