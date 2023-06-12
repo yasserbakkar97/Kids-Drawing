@@ -72,6 +72,9 @@ class MainActivity : AppCompatActivity() {
         ibGallery.setOnClickListener {
             requestStoragePermission()
         }
+        ibUndo.setOnClickListener {
+            drawing_view?.onClickUndo()
+        }
     }
 
     private fun requestStoragePermission() {
