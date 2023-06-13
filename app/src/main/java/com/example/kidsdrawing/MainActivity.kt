@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.media.MediaScannerConnection
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -56,14 +57,14 @@ class MainActivity : AppCompatActivity() {
                 if (isGranted) {
                     Toast.makeText(
                         this,
-                        "Permission granted now you can read the storage files.",
+                        "Permission granted",
                         Toast.LENGTH_SHORT
                     ).show()
 
                     val pickIntent =
                         Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                     openGalleryLauncher.launch(pickIntent)
-                } else {
+                }else {
                     if (permissionName == Manifest.permission.READ_EXTERNAL_STORAGE) {
                         Toast.makeText(
                             this,
@@ -72,7 +73,6 @@ class MainActivity : AppCompatActivity() {
                         ).show()
                     }
                 }
-
             }
         }
 
@@ -198,16 +198,13 @@ class MainActivity : AppCompatActivity() {
             canvas.drawColor(Color.WHITE)
         }
         view.draw(canvas)
-
         return returnedBitmap
-
     }
 
     private suspend fun saveBitmapFile(mBitmap: Bitmap?): String {
         var result = ""
         withContext(Dispatchers.IO) {
             if (mBitmap != null) {
-
                 try {
                     val bytes = ByteArrayOutputStream()
                     mBitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes)
@@ -229,6 +226,7 @@ class MainActivity : AppCompatActivity() {
                                 "File saved successfully :$result",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            shareImage(result)
                         } else {
                             Toast.makeText(
                                 this@MainActivity,
@@ -259,4 +257,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun shareImage(result:String){
+
+        MediaScannerConnection.scanFile(
+            this@MainActivity, arrayOf(result), null) {
+                path, uri ->
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+            shareIntent.type = "image/png"
+            startActivity(Intent.createChooser(shareIntent, "Share"))
+
+        }
+    }
 }

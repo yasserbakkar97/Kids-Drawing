@@ -22,7 +22,7 @@
             android:id="@+id/ivBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/eiffel"
+            tools:src="@drawable/eiffel"
             android:scaleType="centerCrop"/>
 
         <com.example.kidsdrawing.DrawingView
