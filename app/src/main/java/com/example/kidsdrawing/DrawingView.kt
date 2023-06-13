@@ -29,7 +29,6 @@ class DrawingView(context: Context, attrs: AttributeSet ) : View(context, attrs)
             mUndoPath.add(mPath.removeAt(mPath.size - 1))
             invalidate()
         }
-
     }
 
     private fun setUpDrawing() {
